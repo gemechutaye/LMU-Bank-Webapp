@@ -288,7 +288,7 @@ csp = {
 
 ## About the Author
 
-This project was developed by **Gemechu Taye** as part of the Web Application Security course at Loyola Marymount University. The project demonstrates practical implementation of web security concepts and best practices in a real-world application.
+This project was developed by **Gemechu Taye** as part of the Secure Software Development course at Loyola Marymount University. The project demonstrates practical implementation of web security concepts and best practices in a real-world application.
 
 ## Project Background
 
