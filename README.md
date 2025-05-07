@@ -50,8 +50,8 @@ LMU Bank is a secure web application that demonstrates comprehensive security fe
 
 1. Clone the repository:
    ```
-   git clone https://github.com/gemechutaye/LMU-Bank-Webapp2.git
-   cd LMU-Bank-Webapp2
+   git clone https://github.com/gemechutaye/LMU-Bank-Webapp.git
+   cd LMU-Bank-Webapp
    ```
 
 2. Create and activate a virtual environment:
@@ -302,7 +302,7 @@ This project implements the security concepts learned in the course, including:
 
 ## Development Notes
 
-This application was developed as part of a web security course to demonstrate secure coding practices. While it implements many security features, in a production environment you would also want to consider:
+This application was developed as part of a Secure Software Development course to demonstrate secure coding practices. While it implements many security features, in a production environment you would also want to consider:
 
 1. Using HTTPS exclusively
 2. Implementing rate limiting for login attempts
