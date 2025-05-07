@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Error {{ error_code }} - CryptoSecure{% endblock %}
+
+{% block content %}
+<div class="container error-container">
+    <div class="error-code">{{ error_code }}</div>
+    <div class="error-message">{{ error_message }}</div>
+    <p>Something went wrong. Please try again or return to the home page.</p>
+    <div class="mt-4">
+        <a href="{{ url_for('index') }}" class="btn btn-primary">
+            <i class="fas fa-home me-2"></i>Return to Home
+        </a>
+    </div>
+</div>
+{% endblock %}

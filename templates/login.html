@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - LMU Bank{% endblock %}
+
+{% block content %}
+<div class="container form-container">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white">
+            <h2 class="card-title mb-0"><i class="fas fa-sign-in-alt me-2"></i>Login</h2>
+        </div>
+        <div class="card-body">
+            <!-- Login form with CSRF protection -->
+            <form method="POST" action="{{ url_for('login') }}">
+                <!-- CSRF protection token - critical for security -->
+                {{ form.hidden_tag() }}
+                
+                <div class="mb-3">
+                    <label for="identifier" class="form-label">{{ form.identifier.label }}</label>
+                    {{ form.identifier(class="form-control", id="identifier", placeholder="Enter your username or email") }}
+                    {% if form.identifier.errors %}
+                    <div class="form-text text-danger">
+                        {% for error in form.identifier.errors %}
+                        {{ error }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="password" class="form-label">{{ form.password.label }}</label>
+                    {{ form.password(class="form-control", id="password", placeholder="Enter your password") }}
+                    {% if form.password.errors %}
+                    <div class="form-text text-danger">
+                        {% for error in form.password.errors %}
+                        {{ error }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="d-grid gap-2">
+                    {{ form.submit(class="btn btn-primary") }}
+                </div>
+            </form>
+        </div>
+        <div class="card-footer text-center">
+            <p class="mb-0">Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
+        </div>
+    </div>
+    
+    <!-- Security Information Card -->
+    <div class="card mt-4">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Security Information</h5>
+        </div>
+        <div class="card-body">
+            <p>This login form implements several security features:</p>
+            <ul>
+                <li><strong>CSRF Protection</strong>: Prevents cross-site request forgery attacks</li>
+                <li><strong>User Enumeration Defense</strong>: Does not reveal if usernames exist</li>
+                <li><strong>Rate Limiting</strong>: Prevents brute force attempts</li>
+                <li><strong>Secure Cookies</strong>: Authentication tokens are stored securely</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

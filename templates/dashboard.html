@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - LMU Bank{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="mb-0">Welcome, {{ user.username }}</h1>
+            <p class="text-muted">
+                <i class="fas fa-clock me-1"></i> Last login: {% if user.last_login %}{{ user.last_login.strftime('%B %d, %Y at %I:%M %p') }}{% else %}First login{% endif %}
+            </p>
+        </div>
+        <div class="col-auto">
+            <a href="{{ url_for('transfer') }}" class="btn btn-primary">
+                <i class="fas fa-exchange-alt me-2"></i>Transfer Funds
+            </a>
+        </div>
+    </div>
+    
+    <div class="row mb-5">
+        <div class="col-12">
+            <h2 class="mb-3">Your Account Balances</h2>
+            <div class="row">
+                {% for balance in balances %}
+                <div class="col-md-4 mb-4">
+                    <div class="card crypto-card h-100" style="border-left: 5px solid {{ balance.color }};">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div>
+                                    <h3 class="card-title">{{ balance.symbol }}</h3>
+                                    <p class="card-subtitle text-muted">{{ balance.name }}</p>
+                                </div>
+                                <div style="width: 40px; height: 40px; background-color: {{ balance.color }}; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-weight: bold;">
+                                    {{ balance.symbol }}
+                                </div>
+                            </div>
+                            <h4 class="card-text mb-0">
+                                {{ "%.8f"|format(balance.amount) }}
+                            </h4>
+                        </div>
+                        <div class="card-footer bg-transparent">
+                            <a href="{{ url_for('transfer') }}" class="btn btn-sm btn-outline-primary">
+                                Transfer
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-3">Recent Transactions</h2>
+            {% if transactions %}
+            <div class="card">
+                <div class="card-body p-0">
+                    <div class="list-group list-group-flush">
+                        {% for tx in transactions %}
+                        <div class="list-group-item transaction-item {% if tx.is_sent %}transaction-sent{% else %}transaction-received{% endif %}">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    {% if tx.is_sent %}
+                                    <span class="text-danger"><i class="fas fa-arrow-right me-2"></i>Sent to {{ tx.receiver }}</span>
+                                    {% else %}
+                                    <span class="text-success"><i class="fas fa-arrow-left me-2"></i>Received from {{ tx.sender }}</span>
+                                    {% endif %}
+                                    <div class="text-muted small">{{ tx.formatted_time }}</div>
+                                </div>
+                                <div class="text-end">
+                                    <div class="d-flex align-items-center">
+                                        <span class="me-2 {% if tx.is_sent %}text-danger{% else %}text-success{% endif %}">
+                                            {{ "%.8f"|format(tx.amount) }}
+                                        </span>
+                                        <span style="width: 25px; height: 25px; background-color: {{ tx.crypto_color }}; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 0.7rem; font-weight: bold;">
+                                            {{ tx.crypto_type }}
+                                        </span>
+                                    </div>
+                                    <span class="badge bg-{{ 'success' if tx.status == 'completed' else 'warning' }}">
+                                        {{ tx.status }}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>No transactions yet. Start trading cryptocurrencies with other users!
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

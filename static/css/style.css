@@ -1,0 +1,111 @@
+/* Main styling for Crypto Exchange app */
+
+/* Custom styling for crypto cards */
+.crypto-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.crypto-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.crypto-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Transaction list styling */
+.transaction-item {
+    border-left: 4px solid transparent;
+    transition: background-color 0.2s ease;
+}
+
+.transaction-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.transaction-sent {
+    border-left-color: var(--bs-danger);
+}
+
+.transaction-received {
+    border-left-color: var(--bs-success);
+}
+
+/* Transfer animation container */
+.transfer-animation-container {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    margin: 2rem 0;
+}
+
+/* Form styling */
+.form-container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* Error page styling */
+.error-container {
+    text-align: center;
+    padding: 5rem 1rem;
+}
+
+.error-code {
+    font-size: 8rem;
+    font-weight: bold;
+    color: var(--bs-info);
+    margin-bottom: 1rem;
+}
+
+.error-message {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+/* Hero section on landing page */
+.hero-section {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, #1e1e2f 0%, #2d2d44 100%);
+    color: white;
+    text-align: center;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    opacity: 0.8;
+}
+
+/* Footer styling */
+.footer {
+    background-color: var(--bs-dark);
+    color: var(--bs-light);
+    padding: 2rem 0;
+    margin-top: 3rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+    
+    .crypto-card {
+        margin-bottom: A1rem;
+    }
+}

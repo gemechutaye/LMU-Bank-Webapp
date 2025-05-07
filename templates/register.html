@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - CryptoSecure{% endblock %}
+
+{% block content %}
+<div class="container form-container">
+    <div class="card shadow-lg">
+        <div class="card-header bg-success text-white">
+            <h2 class="card-title mb-0"><i class="fas fa-user-plus me-2"></i>Register</h2>
+        </div>
+        <div class="card-body">
+            <!-- Registration form with CSRF protection -->
+            <form method="POST" action="{{ url_for('register') }}">
+                <!-- CSRF protection token - critical for security -->
+                {{ form.hidden_tag() }}
+                
+                <div class="mb-3">
+                    <label for="username" class="form-label">{{ form.username.label }}</label>
+                    {{ form.username(class="form-control", id="username", placeholder="Choose a username (3-64 characters)") }}
+                    {% if form.username.errors %}
+                    <div class="form-text text-danger">
+                        {% for error in form.username.errors %}
+                        {{ error }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <div id="usernameHelp" class="form-text">Username can only contain letters, numbers, underscores and hyphens.</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="email" class="form-label">{{ form.email.label }}</label>
+                    {{ form.email(class="form-control", id="email", placeholder="Enter your email address") }}
+                    {% if form.email.errors %}
+                    <div class="form-text text-danger">
+                        {% for error in form.email.errors %}
+                        {{ error }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="mb-3">
+                    <label for="password" class="form-label">{{ form.password.label }}</label>
+                    {{ form.password(class="form-control", id="password", placeholder="Choose a strong password (min 8 characters)") }}
+                    {% if form.password.errors %}
+                    <div class="form-text text-danger">
+                        {% for error in form.password.errors %}
+                        {{ error }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    <div id="passwordHelp" class="form-text">
+                        Password must contain at least 8 characters with uppercase, lowercase, and numbers.
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <label for="confirm_password" class="form-label">{{ form.confirm_password.label }}</label>
+                    {{ form.confirm_password(class="form-control", id="confirm_password", placeholder="Confirm your password") }}
+                    {% if form.confirm_password.errors %}
+                    <div class="form-text text-danger">
+                        {% for error in form.confirm_password.errors %}
+                        {{ error }}
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="d-grid gap-2">
+                    {{ form.submit(class="btn btn-success") }}
+                </div>
+            </form>
+        </div>
+        <div class="card-footer text-center">
+            <p class="mb-0">Already have an account? <a href="{{ url_for('login') }}">Login here</a></p>
+        </div>
+    </div>
+    
+    <!-- Password Strength Information Card -->
+    <div class="card mt-4">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0"><i class="fas fa-shield-alt me-2"></i>Password Security</h5>
+        </div>
+        <div class="card-body">
+            <p>Strong passwords are essential for account security. Your password should:</p>
+            <ul>
+                <li>Be at least 8 characters long</li>
+                <li>Include uppercase and lowercase letters</li>
+                <li>Include at least one number</li>
+                <li>Not contain your username or common words</li>
+                <li>Be unique to this account</li>
+            </ul>
+            <p class="mb-0"><strong>Note:</strong> We securely hash your password using PBKDF2 with a unique salt. We never store your actual password.</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Password strength visual feedback
+    const passwordInput = document.getElementById('password');
+    const passwordHelp = document.getElementById('passwordHelp');
+    
+    if (passwordInput && passwordHelp) {
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            
+            // Basic visual strength indicator
+            let strength = 0;
+            let feedback = [];
+            
+            if (password.length >= 8) {
+                strength++;
+            } else {
+                feedback.push("Password should be at least 8 characters");
+            }
+            
+            if (/[A-Z]/.test(password)) {
+                strength++;
+            } else {
+                feedback.push("Add uppercase letters");
+            }
+            
+            if (/[a-z]/.test(password)) {
+                strength++;
+            } else {
+                feedback.push("Add lowercase letters");
+            }
+            
+            if (/[0-9]/.test(password)) {
+                strength++;
+            } else {
+                feedback.push("Add numbers");
+            }
+            
+            // Update UI based on strength
+            let message = "";
+            let color = "";
+            
+            switch (strength) {
+                case 0:
+                case 1:
+                    color = "var(--bs-danger)";
+                    message = "Password is weak";
+                    break;
+                case 2:
+                case 3:
+                    color = "var(--bs-warning)";
+                    message = "Password is moderate";
+                    break;
+                case 4:
+                    color = "var(--bs-success)";
+                    message = "Password is strong";
+                    break;
+            }
+            
+            // Only show feedback if password has been started
+            if (password.length > 0) {
+                passwordHelp.innerHTML = `
+                    <span style="color: ${color};">${message}</span><br>
+                    ${feedback.length > 0 ? '<small>' + feedback.join(', ') + '</small>' : ''}
+                `;
+            } else {
+                passwordHelp.innerHTML = 'Password must contain at least 8 characters with uppercase, lowercase, and numbers.';
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

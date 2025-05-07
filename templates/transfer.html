@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}Transfer Funds - LMU Bank{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-7">
+            <h1><i class="fas fa-exchange-alt me-2"></i>Transfer Funds</h1>
+            <p class="text-muted">Send money ($) or cryptocurrency securely to other users.</p>
+            
+            <!-- Animation container -->
+            <div class="transfer-animation-container">
+                <!-- Animation will appear here via JavaScript -->
+            </div>
+            
+            <!-- Transfer form with CSRF protection -->
+            <div class="card shadow">
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('transfer') }}" id="transfer-form">
+                        <!-- CSRF protection token - critical for security -->
+                        {{ form.hidden_tag() }}
+                        
+                        <div class="mb-3">
+                            <label for="recipient" class="form-label">{{ form.recipient.label }}</label>
+                            {{ form.recipient(class="form-control", id="recipient", placeholder="Enter recipient's username") }}
+                            {% if form.recipient.errors %}
+                            <div class="form-text text-danger">
+                                {% for error in form.recipient.errors %}
+                                {{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="crypto_type" class="form-label">Currency Type</label>
+                            {{ form.crypto_type(class="form-control", id="crypto_type") }}
+                            {% if form.crypto_type.errors %}
+                            <div class="form-text text-danger">
+                                {% for error in form.crypto_type.errors %}
+                                {{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">{{ form.amount.label }}</label>
+                            {{ form.amount(class="form-control", id="amount", placeholder="Enter amount to transfer") }}
+                            {% if form.amount.errors %}
+                            <div class="form-text text-danger">
+                                {% for error in form.amount.errors %}
+                                {{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            {{ form.submit(class="btn btn-primary btn-lg") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-5 mt-4 mt-lg-0">
+            <!-- Security Information -->
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-shield-alt me-2"></i>Security Features</h5>
+                </div>
+                <div class="card-body">
+                    <p>All transfers on LMU Bank are protected with:</p>
+                    <ul>
+                        <li><strong>CSRF Protection</strong>: Every form submission includes a secure token to prevent cross-site request forgery</li>
+                        <li><strong>Input Validation</strong>: All inputs are validated server-side</li>
+                        <li><strong>XSS Prevention</strong>: All user inputs are sanitized before display</li>
+                        <li><strong>Balance Verification</strong>: Your account balance is verified before each transfer</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Transfer Tips -->
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Transfer Tips</h5>
+                </div>
+                <div class="card-body">
+                    <ul>
+                        <li>Double-check the recipient's username before sending</li>
+                        <li>Transfers are irreversible once completed</li>
+                        <li>You can only transfer funds ($ or cryptocurrency) that you own</li>
+                        <li>The recipient must be a registered user</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
