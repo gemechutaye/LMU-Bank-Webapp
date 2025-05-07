@@ -50,8 +50,8 @@ LMU Bank is a secure web application that demonstrates comprehensive security fe
 
 1. Clone the repository:
    ```
-   git clone https://github.com/gemechutaye/LMU-Bank-Webapp.git
-   cd LMU-Bank-Webapp
+   git clone https://github.com/gemechutaye/LMU-Bank-Webapp2.git
+   cd LMU-Bank-Webapp2
    ```
 
 2. Create and activate a virtual environment:
@@ -60,48 +60,12 @@ LMU Bank is a secure web application that demonstrates comprehensive security fe
    source env/bin/activate  # On Windows: env\Scripts\activate
    ```
 
-3. Install the required dependencies:
+3. Install dependencies:
    ```
    pip install -r requirements.txt
    ```
 
-4. Set up environment variables (optional):
-   Create a `.env` file in the root directory with the following variables:
-   ```
-   SESSION_SECRET=your_secret_key_here
-   DATABASE_URL=sqlite:///instance/cryptoapp.db
-   ```
-   If not provided, the application will use default values.
-
-5. Initialize the database:
-   ```
-   python main.py
-   ```
-
-6. Run the application:
-   ```
-   python main.py
-   ```
-   The application will be available at http://127.0.0.1:5000/
-
-## Requirements
-
-The application requires the following dependencies:
-
-- Flask 2.3.3+: Web framework
-- Flask-SQLAlchemy 3.1.1+: ORM for database management
-- Flask-WTF 1.2.1+: Form handling with CSRF protection
-- Flask-Login 0.6.3+: User session management
-- PyJWT 2.8.0+: JSON Web Token authentication
-- passlib 1.7.4+: Password hashing
-- bleach 6.1.0+: Input sanitization
-- email-validator 2.1.0+: Email validation in forms
-- python-dotenv 1.0.0+: Environment variable management
-- Werkzeug 2.3.7+: WSGI utilities
-
-All dependencies are listed in the `requirements.txt` file and can be installed with pip.
-
-7. Set environment variables (optional, defaults are provided for development):
+4. Set environment variables (optional, defaults are provided for development):
    ```
    export SESSION_SECRET=your_secure_random_key
    export DATABASE_URL=sqlite:///cryptoapp.db  # Default is SQLite
